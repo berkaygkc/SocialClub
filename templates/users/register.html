@@ -1,0 +1,85 @@
+{% extends 'layout/loginApp.html' %}
+{% block content %}
+    {% load static %}
+    <div class="container">
+        <!--Container-->
+        <div class="login-container is-centered">
+            <div class="columns is-vcentered">
+                <div class="column">
+                    <h2 class="form-title has-text-centered">Kayıt ol!</h2>
+                    <h3 class="form-subtitle has-text-centered">Hızlı ve Kolaydır.</h3>
+                    <!--Form-->
+                    <form id="registerForm" method="POST" action="">
+                        {% csrf_token %}
+                        <div class="login-form">
+                            <div class="form-panel">
+                                {% if error_message %}
+                                    <p class="is-danger">{{ error_message }}</p>
+                                {% endif %}
+                                <div class="columns is-multiline">
+                                    <div class="column is-6">
+                                        <div class="field">
+                                            <label>Ad</label>
+                                            <div class="control">
+                                                {{ form.first_name }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="column is-6">
+                                        <div class="field">
+                                            <label>Soyad</label>
+                                            <div class="control">
+                                                {{ form.last_name }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="column is-12">
+                                        <div class="field">
+                                            <label>Kullanıcı Adı</label>
+                                            <div class="control">
+                                                {{ form.username }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="column is-12">
+                                        <div class="field">
+                                            <label>e-Posta</label>
+                                            <div class="control">
+                                                {{ form.email }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="column is-12">
+                                        <div class="field">
+                                            <label>Şifre</label>
+                                            <div class="control">
+                                                {{ form.password }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="column is-12">
+                                        <div class="field">
+                                            <label>Şifre Tekrar</label>
+                                            <div class="control">
+                                                {{ form.password_repeat }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="column is-12">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="buttons mt-2">
+                                <a onclick="document.getElementById('registerForm').submit()"
+                                   class="button is-solid primary-button is-fullwidth raised">Kaydol</a>
+                            </div>
+                            <div class="account-link has-text-centered">
+                                <a href="/Login">Hesabın var mı? Oturum aç</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

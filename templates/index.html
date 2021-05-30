@@ -1,0 +1,251 @@
+{% extends 'layout/app.html' %}
+{% block content %}
+    {% load static %}
+    <div class="view-wrapper">
+        <div id="main-feed" class="container">
+            <div id="shadow-dom" class="view-wrap">
+                <div class="columns">
+                    <div class="column is-3">
+                        <div class="placeload list-placeload">
+                            <div class="header">
+                                <div class="content-shape loads"></div>
+                            </div>
+                            <div class="body">
+                                <div class="flex-block">
+                                    <div class="img loads"></div>
+                                    <div class="inner-wrap">
+                                        <div class="content-shape loads"></div>
+                                        <div class="content-shape loads"></div>
+                                    </div>
+                                </div>
+                                <div class="flex-block">
+                                    <div class="img loads"></div>
+                                    <div class="inner-wrap">
+                                        <div class="content-shape loads"></div>
+                                        <div class="content-shape loads"></div>
+                                    </div>
+                                </div>
+                                <div class="flex-block">
+                                    <div class="img loads"></div>
+                                    <div class="inner-wrap">
+                                        <div class="content-shape loads"></div>
+                                        <div class="content-shape loads"></div>
+                                    </div>
+                                </div>
+                                <div class="flex-block">
+                                    <div class="img loads"></div>
+                                    <div class="inner-wrap">
+                                        <div class="content-shape loads"></div>
+                                        <div class="content-shape loads"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="column is-9">
+                        <div class="placeload compose-placeload">
+                            <div class="header">
+                                <div class="content-shape is-lg loads"></div>
+                                <div class="content-shape is-lg loads"></div>
+                                <div class="content-shape is-lg loads"></div>
+                            </div>
+                            <div class="body">
+                                <div class="img loads"></div>
+                                <div class="inner-wrap">
+                                    <div class="content-shape loads"></div>
+                                    <div class="content-shape loads"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="placeload post-placeload">
+                            <div class="header">
+                                <div class="img loads"></div>
+                                <div class="header-content">
+                                    <div class="content-shape loads"></div>
+                                    <div class="content-shape loads"></div>
+                                </div>
+                            </div>
+                            <div class="image-placeholder loads"></div>
+                            <div class="placeholder-footer">
+                                <div class="footer-block">
+                                    <div class="img loads"></div>
+                                    <div class="inner-wrap">
+                                        <div class="content-shape loads"></div>
+                                        <div class="content-shape loads"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div id="activity-feed" class="view-wrap true-dom is-hidden">
+                <div class="columns">
+                    <!-- Left side column -->
+                    <div class="column is-3 is-hidden-mobile">
+                        <div class="card">
+                            <div class="card-heading is-bordered">
+                                <h4>Önerilen Kulupler</h4>
+                                <div class="dropdown is-spaced is-right is-neutral dropdown-trigger">
+                                    <div>
+                                        <div class="button">
+                                            <i data-feather="more-vertical"></i>
+                                        </div>
+                                    </div>
+                                    <div class="dropdown-menu" role="menu">
+                                        <div class="dropdown-content">
+                                            <a href="#" class="dropdown-item">
+                                                <div class="media">
+                                                    <i data-feather="file-text"></i>
+                                                    <div class="media-content">
+                                                        <h3>Hepsi</h3>
+                                                        <small>Kuluplerin hepsini gör</small>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body no-padding">
+                                <!-- Recommended Page -->
+                                {% for club in clubs %}
+                                    <div class="page-block transition-block">
+                                        <img src="{{ club.profile.profile_picture.url }}" data-page-popover="0"
+                                             alt="">
+                                        <div class="page-meta">
+                                            <span><a
+                                                    href="/Club/{{ club.username }}">{{ club.first_name }} {{ club.last_name }}</a></span>
+                                        </div>
+                                        <div class="add-page add-transition">
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Left side column -->
+
+                    <!-- Middle column -->
+                    <div class="column is-9">
+                        {% if not request.user.profile.is_student %}
+                            <form id="newPost" method="post">
+                                {% csrf_token %}
+                                <div id="compose-card" class="card is-new-content">
+                                    <div class="tabs-wrapper">
+                                        <div class="tabs is-fullwidth">
+                                            <ul>
+                                                <li class="is-active">
+                                                    <a>
+                                                        <span class="icon is-small"><i data-feather="edit-3"></i></span>
+                                                        <span>Yayınla</span>
+                                                    </a>
+                                                </li>
+                                                <li class="close-wrap">
+                                            <span class="close-publish">
+                                                <i data-feather="x"></i>
+                                            </span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <!-- Tab content -->
+                                        <div class="tab-content">
+                                            <!-- Compose form -->
+                                            <div class="compose">
+                                                <div class="compose-form">
+                                                    <img src="{{ request.user.profile.profile_picture.url }}" alt="">
+                                                    <div class="control">
+                                                        {{ form.body }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="more-wrap">
+                                                <button id="publish-button" type="submit"
+                                                        class="button is-solid accent-button is-fullwidth is-disabled">
+                                                    Paylaş
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        {% endif %}
+                        {% for post in posts %}
+                            <div class="card is-post">
+                                <div class="content-wrap">
+                                    <div class="card-heading">
+                                        <div class="user-block">
+                                            <div class="image">
+                                                <img src="{{ post.userId.profile.profile_picture.url }}"
+                                                     data-user-popover="5"
+                                                     alt="">
+                                            </div>
+                                            <div class="user-info">
+                                                <a href="#">{{ post.userId.first_name }} {{ post.userId.last_name }}</a>
+                                                <span class="time">{{ post.created_at }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- /Post header -->
+
+                                    <!-- Post body -->
+                                    <div class="card-body">
+                                        <!-- Post body text -->
+                                        <div class="post-text">
+                                            <p>{{ post.body }}
+                                            <p>
+                                        </div>
+                                    </div>
+                                    <!-- /Post body -->
+
+                                    <!-- Post footer -->
+                                    <div class="card-footer">
+                                        <!-- Followers -->
+                                        <div class="likers-group">
+                                            <img src="https://via.placeholder.com/300x300"
+                                                 data-demo-src="assets/img/avatars/daniel.jpg" data-user-popover="3"
+                                                 alt="">
+                                            <img src="https://via.placeholder.com/300x300"
+                                                 data-demo-src="assets/img/avatars/elise.jpg" data-user-popover="6"
+                                                 alt="">
+                                        </div>
+                                        <div class="likers-text">
+                                            <p>
+                                                <a href="#">{{ post.postLikes.all.count }}</a>
+                                            </p>
+                                            <p>Begendi</p>
+                                        </div>
+                                        <!-- Post statistics -->
+                                        <div class="social-count">
+                                            <div class="likes-count">
+                                                <i data-feather="heart"></i>
+                                                <span>{{ post.postLikes.all.count }}</span>
+                                            </div>
+                                            <div class="like-wrapper">
+                                                <a href="javascript:void(0)" class="like-button">
+                                                    <i class="mdi mdi-heart not-liked bouncy"></i>
+                                                    <i class="mdi mdi-heart is-liked bouncy"></i>
+                                                    <span class="like-overlay"></span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+
+                        <!-- Load more posts -->
+                        <div class=" load-more-wrap narrow-top has-text-centered">
+                            <a href="#" class="load-more-button">Daha Fazla Yükle</a>
+                        </div>
+                        <!-- /Load more posts -->
+
+                    </div>
+                    <!-- /Middle column -->
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

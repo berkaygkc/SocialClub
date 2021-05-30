@@ -1,0 +1,374 @@
+{% extends 'layout/app.html' %}
+{% block content %}
+    {% load static %}
+    <div class="view-wrapper">
+        <div class="container is-custom">
+            <div id="profile-about" class="view-wrap is-headless">
+                <div class="columns is-multiline no-margin">
+                    <div class="column is-paddingless">
+                        <div class="cover-bg">
+                            <img class="cover-image" src="{{ user.profile.profile_cover.url }}" alt="">
+                            <div class="avatar">
+                                <img id="user-avatar" class="avatar-image" src="{{ user.profile.profile_picture.url }}"
+                                     alt="">
+                                <div class="avatar-button">
+                                    <i data-feather="plus"></i>
+                                </div>
+                                <div class="pop-button is-far-left has-tooltip modal-trigger"
+                                     data-modal="change-profile-pic-modal" data-placement="right"
+                                     data-title="Resim değiştir">
+                                    <a class="inner">
+                                        <i data-feather="camera"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="cover-overlay"></div>
+                            <div class="cover-edit modal-trigger" data-modal="change-cover-modal">
+                                <i class="mdi mdi-camera"></i>
+                                <span>Resmi Düzenle</span>
+                            </div>
+                            <div class="dropdown is-spaced is-right is-accent dropdown-trigger timeline-mobile-dropdown is-hidden-desktop">
+                                <div>
+                                    <div class="button">
+                                        <i data-feather="more-vertical"></i>
+                                    </div>
+                                </div>
+                                <div class="dropdown-menu" role="menu">
+                                    <div class="dropdown-content"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="profile-menu is-hidden-mobile">
+                            <div class="menu-start">
+                                <a href="/Profile/{{ user.username }}" class="button has-min-width">Profil</a>
+                            </div>
+                            <div class="menu-end">
+                            </div>
+                        </div>
+                        <div class="profile-subheader">
+                            <div class="subheader-start is-hidden-mobile">
+                            </div>
+                            <div class="subheader-middle">
+                                <h2>{{ user.first_name }} {{ user.last_name }}</h2>
+                                <span>Öğrenci</span>
+                            </div>
+                            <div class="subheader-end">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="profile-about side-menu">
+                        <div class="left-menu">
+                            <div class="left-menu-inner">
+                                <div class="menu-item is-active" data-content="overview-content">
+                                    <div class="menu-icon">
+                                        <i class="mdi mdi-progress-check"></i>
+                                        <span>Genel Bakış</span>
+                                    </div>
+                                </div>
+                                <div class="menu-item" data-content="education-content">
+                                    <div class="menu-icon">
+                                        <i class="mdi mdi-school"></i>
+                                        <span>Eğitim</span>
+                                    </div>
+                                </div>
+                                <div class="menu-item" data-content="job-content">
+                                    <div class="menu-icon">
+                                        <i class="mdi mdi-briefcase-plus"></i>
+                                        <span>Kulüpler</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="right-content">
+                            <div id="overview-content" class="content-section is-active">
+                                <div class="columns">
+                                    <div class="column">
+                                        <div class="flex-block">
+                                            <img src="../media/images/ytu-logo.png" alt=""
+                                                 data-page-popover="6">
+                                            <div class="flex-block-meta">
+                                                <span><a>{{ user.profile.bolum }}</a> okuyor</span>
+                                                {% if user.id == request.user.id %}
+                                                    <a href="/Settings" class="action-link">Düzenle</a>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <div class="flex-block">
+                                            <img src="../media/images/ytu-logo.png" alt=""
+                                                 data-page-popover="4">
+                                            <div class="flex-block-meta">
+                                                <span><a>{{ user.email }}</a></span>
+                                                {% if user.id == request.user.id %}
+                                                    <a href="/Settings" class="action-link">Düzenle</a>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <div class="flex-block">
+                                            <img src="../media/images/ytu-logo.png" alt=""
+                                                 data-page-popover="8">
+                                            <div class="flex-block-meta">
+                                                <span><a>{{ user.profile.address }}</a>'da yaşıyor</span>
+                                                {% if user.id == request.user.id %}
+                                                    <a href="/Settings" class="action-link">Düzenle</a>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="column">
+                                        <div class="about-summary">
+                                            <div class="content">
+                                                <h3>Hakkında</h3>
+                                                <p>{{ user.profile.bio }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="education-content" class="content-section">
+                                <div id="education-glider" class="slider-timeline about-glider">
+                                    <div class="timeline-item">
+                                        <div class="image-container">
+                                            <img src="../media/images/ytu-logo.png" alt="">
+                                        </div>
+                                        <br>
+                                        <h1 style="text-align: center">Yıldız Teknik Üniversitesi</h1>
+                                        <div class="more">
+                                            <p style="text-align: center">{{ user.profile.bolum }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="slider-dots-education-glider" class="dots"></div>
+                            </div>
+                            <div id="job-content" class="content-section">
+                                <div id="jobs-glider" class="slider-timeline about-glider">
+                                    <div class="timeline-item">
+                                        <div class="image-container">
+                                            <img src="https://via.placeholder.com/800x600" alt=""
+                                                 data-demo-src="{% static "img/demo/unsplash/popovers/pages/slicer.jpg" %}">
+                                            <div class="logo-container">
+                                                <img src="https://via.placeholder.com/150x150" alt=""
+                                                     data-demo-src="{% static "img/icons/logos/slicer.svg" %}"
+                                                     data-page-popover="4">
+                                            </div>
+                                        </div>
+                                        <h3>Data.UyeOlunanKulup</h3>
+                                    </div>
+                                    <div id="slider-dots-jobs-glider" class="dots"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="change-cover-modal" class="modal change-cover-modal is-medium has-light-bg">
+                <div class="modal-background"></div>
+                <div class="modal-content">
+                    <div class="card">
+                        <div class="card-heading">
+                            <h3>Profil Fotoğrafını Güncelle</h3>
+                            <div class="close-wrap">
+                                <span class="close-modal">
+                                    <i data-feather="x"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="selection-placeholder">
+                                <div class="columns">
+                                    <div class="column is-6">
+                                        <div class="selection-box modal-trigger" data-modal="upload-crop-cover-modal">
+                                            <div class="box-content">
+                                                <img src="{% static "img/illustrations/profile/upload-cover.svg" %}"
+                                                     alt="">
+                                                <div class="box-text">
+                                                    <span>Yükle</span>
+                                                    <span>Bilgisayardan</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="column is-6">
+                                        <div class="selection-box modal-trigger" data-modal="user-photos-modal">
+                                            <div class="box-content">
+                                                <img src="{% static "img/illustrations/profile/change-cover.svg" %}"
+                                                     alt="">
+                                                <div class="box-text">
+                                                    <span>Seç</span>
+                                                    <span>Fotoğraflardan</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="change-profile-pic-modal" class="modal change-profile-pic-modal is-medium has-light-bg">
+                <div class="modal-background"></div>
+                <div class="modal-content">
+                    <div class="card">
+                        <div class="card-heading">
+                            <h3>Profil Fotoğrafını Güncelle</h3>
+                            <div class="close-wrap">
+                                <span class="close-modal">
+                                    <i data-feather="x"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="selection-placeholder">
+                                <div class="columns">
+                                    <div class="column is-6">
+                                        <div class="selection-box modal-trigger" data-modal="upload-crop-profile-modal">
+                                            <div class="box-content">
+                                                <img src="{% static "img/illustrations/profile/change-profile.svg" %}"
+                                                     alt="">
+                                                <div class="box-text">
+                                                    <span>Yükle</span>
+                                                    <span>Bilgisayardan Yükle</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="column is-6">
+                                        <div class="selection-box modal-trigger" data-modal="user-photos-modal">
+                                            <div class="box-content">
+                                                <img src="{% static "img/illustrations/profile/upload-profile.svg" %}"
+                                                     alt="">
+                                                <div class="box-text">
+                                                    <span>Seç</span>
+                                                    <span>Fotoğraflardan</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="user-photos-modal" class="modal user-photos-modal is-medium has-light-bg">
+                <div class="modal-background"></div>
+                <div class="modal-content">
+                    <div class="card">
+                        <div class="card-heading">
+                            <h3>Fotoğrafı Seç</h3>
+                            <div class="close-wrap">
+                                <span class="close-modal">
+                                    <i data-feather="x"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="nav-tabs-wrapper">
+                                <div id="recent-photos" class="tab-content has-slimscroll-md is-active">
+                                    <div class="image-grid">
+                                        <div class="columns is-multiline">
+                                            <div class="column is-4">
+                                                <div class="grid-image">
+                                                    <input type="radio" name="selected_photos">
+                                                    <div class="inner">
+                                                        <img src="https://via.placeholder.com/1600x900"
+                                                             data-demo-src="Data.Fotoğraflar" alt="">
+                                                        <div class="inner-overlay"></div>
+                                                        <div class="indicator gelatine">
+                                                            <i data-feather="check"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="button is-solid accent-button replace-button is-disabled">Fotoğrafı Kullan
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="upload-crop-profile-modal" class="modal upload-crop-profile-modal is-xsmall has-light-bg">
+                <div class="modal-background"></div>
+                <div class="modal-content">
+                    <div class="card">
+                        <div class="card-heading">
+                            <h3>Fotoğraf Yükle</h3>
+                            <div class="close-wrap">
+                                <span class="close-modal">
+                                    <i data-feather="x"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <label class="profile-uploader-box" for="upload-profile-picture">
+                                <span class="inner-content">
+                                    <img src="{% static "img/illustrations/profile/add-profile.svg" %}" alt="">
+                                    <span>Fotoğraf Yüklemek İçin <br>Buraya tıkla</span>
+                                </span>
+                                <input type="file" id="upload-profile-picture" accept="image/*">
+                            </label>
+                            <div class="upload-demo-wrap is-hidden">
+                                <div id="upload-profile"></div>
+                                <div class="upload-help">
+                                    <a id="profile-upload-reset" class="profile-reset is-hidden">Fotoğrafi Sil</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button id="submit-profile-picture"
+                                    class="button is-solid accent-button is-fullwidth raised is-disabled">Fotoğrafı
+                                Kullan
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="upload-crop-cover-modal" class="modal upload-crop-cover-modal is-large has-light-bg">
+                <div class="modal-background"></div>
+                <div class="modal-content">
+                    <div class="card">
+                        <div class="card-heading">
+                            <h3>Kapağı Yükle</h3>
+                            <div class="close-wrap">
+                                <span class="close-modal">
+                                    <i data-feather="x"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <label class="cover-uploader-box" for="upload-cover-picture">
+                                <span class="inner-content">
+                                    <img src="{% static "img/illustrations/profile/add-cover.svg" %}" alt="">
+                                    <span>Fotoğraf Yüklemek İçin <br>Buraya Tıkla</span>
+                                </span>
+                                <input type="file" id="upload-cover-picture" accept="image/*">
+                            </label>
+                            <div class="upload-demo-wrap is-hidden">
+                                <div id="upload-cover"></div>
+                                <div class="upload-help">
+                                    <a id="cover-upload-reset" class="cover-reset is-hidden">Fotoğrafi Sil</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button id="submit-cover-picture"
+                                    class="button is-solid accent-button is-fullwidth raised is-disabled">Fotoğrafı
+                                Kullan
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block js %}
+    <script src="{% static "js/profile.js" %}"></script>
+{% endblock %}

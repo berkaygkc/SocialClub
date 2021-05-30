@@ -1,0 +1,135 @@
+{% load static %}
+<div id="main-navbar" class="navbar navbar-v1 is-inline-flex is-transparent no-shadow is-hidden-mobile">
+    <div class="container is-fluid">
+        <div class="navbar-brand">
+            <a href="/" class="navbar-item">
+                <img class="logo light-image" src="{% static "img/logo/friendkit-bold.svg" %}" width="112" height="28"
+                     alt="">
+                <img class="logo dark-image" src="{% static "img/logo/friendkit-white.svg" %}" width="112" height="28"
+                     alt="">
+            </a>
+        </div>
+        <div class="navbar-menu">
+            <div class="navbar-end">
+                <div class="navbar-item">
+                </div>
+                <div id="account-dropdown" class="navbar-item is-account drop-trigger has-caret">
+                    <div class="user-image">
+                        <img src="{{ request.user.profile.profile_picture.url }}" alt="">
+                        <span class="indicator"></span>
+                    </div>
+                    <div class="nav-drop is-account-dropdown">
+                        <div class="inner">
+                            <div class="nav-drop-header">
+                                <span class="username">{{ request.user.first_name }} {{ request.user.last_name }}</span>
+                                <label class="theme-toggle">
+                                    <input type="checkbox">
+                                    <span class="toggler">
+                                                <span class="dark">
+                                                    <i data-feather="moon"></i>
+                                                </span>
+                                        <span class="light">
+                                                    <i data-feather="sun"></i>
+                                                </span>
+                                        </span>
+                                </label>
+                            </div>
+                            <div class="nav-drop-body account-items">
+                                <a id="profile-link" href="/Profile/{{ request.user.username }}" class="account-item">
+                                    <div class="media">
+                                        <div class="media-left">
+                                            <div class="image">
+                                                <img src="{{ request.user.profile.profile_picture.url }}" alt="">
+                                            </div>
+                                        </div>
+                                        <div class="media-content">
+                                            <h3>{{ request.user.username }}</h3>
+                                            <small>Profilim</small>
+                                        </div>
+                                        <div class="media-right">
+                                            <i data-feather="check"></i>
+                                        </div>
+                                    </div>
+                                </a>
+                                <hr class="account-divider">
+                                <hr class="account-divider">
+                                <a href="/Settings" class="account-item">
+                                    <div class="media">
+                                        <div class="icon-wrap">
+                                            <i data-feather="settings"></i>
+                                        </div>
+                                        <div class="media-content">
+                                            <h3>Ayarlar</h3>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a href="/Logout" class="account-item">
+                                    <div class="media">
+                                        <div class="icon-wrap">
+                                            <i data-feather="power"></i>
+                                        </div>
+                                        <div class="media-content">
+                                            <h3>Çıkış</h3>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<nav class="navbar mobile-navbar is-hidden-desktop" aria-label="main navigation">
+    <!-- Brand -->
+    <div class="navbar-brand">
+        <a class="navbar-item" href="/">
+            <img class="light-image" src="{% static "img/logo/friendkit-bold.svg" %}" alt="">
+            <img class="dark-image" src="{% static "img/logo/friendkit-white.svg" %}" alt="">
+        </a>
+
+        <!-- Mobile menu toggler icon -->
+        <div class="navbar-burger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+    <!-- Navbar mobile menu -->
+    <div class="navbar-menu">
+        <!-- Account -->
+        <div class="navbar-item has-dropdown is-active">
+            <a href="#" class="navbar-link">
+                <img src="{{ request.user.profile.profile_picture.url }}" alt="">
+                <span class="is-heading">{{ request.user.first_name }} {{ request.user.last_name }}</span>
+            </a>
+        </div>
+
+        <!-- More -->
+        <div class="navbar-item has-dropdown">
+            <!-- Mobile Dropdown -->
+            <div class="navbar-dropdown">
+                <a href="/Settings" class="navbar-item is-flex is-mobile-icon">
+                    <span><i data-feather="settings"></i>Ayarlar</span>
+                </a>
+                <a href="/Logout" class="navbar-item is-flex is-mobile-icon">
+                    <span><i data-feather="log-out"></i>Çıkış</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <!--Search-->
+    <div class="mobile-search is-hidden">
+        <div class="control">
+            <input id="tipue_drop_input_mobile" class="input" placeholder="Ara">
+            <div class="form-icon">
+                <i data-feather="search"></i>
+            </div>
+            <div class="close-icon">
+                <i data-feather="x"></i>
+            </div>
+            <div id="tipue_drop_content_mobile" class="tipue-drop-content"></div>
+        </div>
+    </div>
+</nav>

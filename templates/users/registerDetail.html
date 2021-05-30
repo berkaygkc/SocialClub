@@ -1,0 +1,83 @@
+{% extends 'layout/loginApp.html' %}
+{% block content %}
+    {% load static %}
+    <div class="container">
+        <!--Container-->
+        <div class="login-container is-centered">
+            <div class="columns is-vcentered">
+                <div class="column">
+                    <h2 class="form-title has-text-centered">Kayıdınızı Tamamlayınız!</h2>
+                    <h3 class="form-subtitle has-text-centered">Hızlı ve Kolaydır.</h3>
+                    <!--Form-->
+                    <form id="registerCompForm" method="POST" action="">
+                        {% csrf_token %}
+                        <div class="login-form">
+                            <div class="form-panel">
+                                {% if error_message %}
+                                    <p class="is-danger">{{ error_message }}</p>
+                                {% endif %}
+                                <div class="columns is-multiline">
+                                    <div class="column is-12">
+                                        <div class="field">
+                                            <label>Bölümünüz *</label>
+                                            <div class="control">
+                                                {{ form.bolum }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="column is-6">
+                                        <div class="field">
+                                            <label>Okul Başlama Tarihi *</label>
+                                            <div class="control">
+                                                {{ form.bolum_baslama }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="column is-6">
+                                        <div class="field">
+                                            <label>Okul Bitiş Tarihi *</label>
+                                            <div class="control">
+                                                {{ form.bolum_bitis }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="column is-12">
+                                        <div class="field">
+                                            <label>Hakkınızda</label>
+                                            <div class="control">
+                                                {{ form.bio }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="column is-12">
+                                        <div class="field">
+                                            <label>Adresiniz</label>
+                                            <div class="control">
+                                                {{ form.address }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="column is-12">
+                                        <div class="field">
+                                            <label>Website</label>
+                                            <div class="control">
+                                                {{ form.website }}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="column is-12">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="buttons mt-2">
+                                <a onclick="document.getElementById('registerCompForm').submit()"
+                                   class="button is-solid primary-button is-fullwidth raised">Kaydol</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,154 @@
+{% extends 'layout/app.html' %}
+{% block content %}
+    {% load is_like %}
+    {% load static %}
+
+    <div class="view-wrapper">
+        <div class="container is-custom">
+            <div id="pages-main" class="view-wrap is-headless">
+                <div class="columns is-multiline no-margin">
+                    <div class="column is-paddingless">
+                        <div class="cover-bg">
+                            <img class="cover-image" src="{{ club.profile.profile_cover.url }}" alt="">
+                            <div class="avatar">
+                                <img id="user-avatar" class="avatar-image" src="{{ club.profile.profile_picture.url }}"
+                                     alt="">
+                            </div>
+                            <div class="dropdown is-spaced is-right is-accent dropdown-trigger timeline-mobile-dropdown is-hidden-desktop">
+                            </div>
+                        </div>
+
+                        <div class="profile-menu is-hidden-mobile">
+                            <div class="menu-start">
+                                <a href="{{ club.username }}" class="button has-min-width">Akış</a>
+                                <a href="{{ club.username }}/Detail" class="button has-min-width">Hakkında</a>
+                            </div>
+                        </div>
+
+                        <div class="profile-subheader">
+                            <div class="subheader-start is-hidden-mobile">
+
+                            </div>
+                            <div class="subheader-middle">
+                                <h2>{{ club.first_name }} {{ club.last_name }}</h2>
+                                <span>Kulüp</span>
+                            </div>
+                            <div class="subheader-end">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="columns has-portrait-padding">
+                    <div class="column is-4">
+                        <div class="basic-infos-wrapper">
+                            <div class="card is-friendkit">
+                                <div class="title-wrap">
+                                    <h4>{{ club.first_name }} {{ club.last_name }}</h4>
+                                </div>
+                                <p>{{ club.profile.bio }}</p>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="column is-8">
+                        <form id="newPost" method="post">
+                            {% csrf_token %}
+                            <div id="compose-card" class="card is-new-content">
+                                <div class="tabs-wrapper">
+                                    <div class="tabs is-fullwidth">
+                                        <ul>
+                                            <li class="is-active">
+                                                <a>
+                                                    <span class="icon is-small"><i data-feather="edit-3"></i></span>
+                                                    <span>Yayınla</span>
+                                                </a>
+                                            </li>
+                                            <li class="close-wrap">
+                                            <span class="close-publish">
+                                                <i data-feather="x"></i>
+                                            </span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <!-- Tab content -->
+                                    <div class="tab-content">
+                                        <!-- Compose form -->
+                                        <div class="compose">
+                                            <div class="compose-form">
+                                                <img src="{{ request.user.profile.profile_picture.url }}" alt="">
+                                                <div class="control">
+                                                    {{ form.body }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="more-wrap">
+                                            <button id="publish-button" type="submit"
+                                                    class="button is-solid accent-button is-fullwidth is-disabled">
+                                                Paylaş
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="profile-timeline">
+                            {% if posts %}
+                                {% for post in posts %}
+                                    <div class="profile-post">
+                                        <div class="time is-hidden-mobile">
+                                            <div class="img-container">
+                                                <img src="{{ club.profile.profile_picture.url }}" alt="">
+                                            </div>
+                                        </div>
+                                        <div class="card is-post">
+                                            <div class="content-wrap">
+                                                <div class="card-heading">
+                                                    <div class="user-block">
+                                                        <div class="image">
+                                                            <img src="{{ club.profile.profile_picture.url }}"
+                                                                 data-page-popover="0" alt="">
+                                                        </div>
+                                                        <div class="user-info">
+                                                            <a href="{{ club.username }}">{{ club.username }}</a>
+                                                            <span class="time">{{ post.created_at }}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="post-text">
+                                                        <p>{{ post.body }}<p>
+                                                    </div>
+                                                </div>
+                                                <div class="card-footer">
+                                                    <div class="social-count">
+                                                        <div class="likes-count">
+                                                            <i data-feather="heart"></i>
+                                                            <span>{{ post.postLikes.all.count }}</span>
+                                                        </div>
+                                                        <div class="like-wrapper">
+                                                            <a href="javascript:void(0)" class="like-button">
+                                                            <i class="mdi mdi-heart not-liked bouncy"></i>
+                                                            <i class="mdi mdi-heart is-liked bouncy"></i>
+                                                            <span class="like-overlay"></span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                <p>Paylaşım Yok</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block js %}
+    <script src="{% static "js/feed.js" %}"></script>
+    <script src="{% static "js/profile.js" %}"></script>
+{% endblock %}

@@ -1,0 +1,119 @@
+{% extends 'layout/app.html' %}
+{% block content %}
+    {% load is_like %}
+    {% load is_followed %}
+    {% load static %}
+
+    <div class="view-wrapper">
+    <div class="container is-custom">
+        <div id="pages-main" class="view-wrap is-headless">
+            <div class="columns is-multiline no-margin">
+                <div class="column is-paddingless">
+                    <div class="cover-bg">
+                        <img class="cover-image" src="{{ club.profile.profile_cover.url }}" alt="">
+                        <div class="avatar">
+                            <img id="user-avatar" class="avatar-image" src="{{ club.profile.profile_picture.url }}"
+                                 alt="">
+                        </div>
+                    </div>
+                    <div class="profile-menu is-hidden-mobile">
+                        <div class="menu-start">
+                            <a href="/Club/{{ club.username }}" class="button has-min-width">Akış</a>
+                            <a href="Detail" class="button has-min-width">Hakkında</a>
+                        </div>
+                        <div class="menu-end">
+                            {% is_followed request.user club.id as followed %}
+                            {% if followed %}
+                                <a href="/unfollow/{{ club.username }}" class="button has-min-width is-active">Takipten
+                                    Çık</a>
+                            {% else %}
+                                <a href="/follow/{{ club.username }}" class="button has-min-width">Takip Et</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="profile-subheader">
+                        <div class="subheader-start is-hidden-mobile">
+                        </div>
+                        <div class="subheader-middle">
+                            <h2>{{ club.first_name }} {{ club.last_name }}</h2>
+                            <span>Kulüp</span>
+                        </div>
+                        <div class="subheader-end">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="columns has-portrait-padding">
+                <div class="column is-4">
+                    <div class="basic-infos-wrapper">
+                        <div class="card is-friendkit">
+                            <div class="title-wrap">
+                                <h4>{{ club.first_name }} {{ club.last_name }}</h4>
+                            </div>
+                            <p>{{ club.profile.bio }}</p>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="column is-8">
+                    <div class="card page-about-card">
+                        <div class="card-title">
+                            <h4>Hakkında</h4>
+                            <a href="https://{{ club.profile.website }}" target="_blank"
+                               class="button is-solid grey-button raised">WebSite</a>
+                        </div>
+                        <div class="about-body">
+                            <div class="columns">
+                                <div class="column is-5">
+                                    <div class="about-block">
+                                        <div class="block-header">
+                                            <h4>İletişim Bilgileri</h4>
+                                        </div>
+                                        <div class="block-content">
+                                            <div class="flex-inner">
+                                                <i data-feather="globe"></i>
+                                                <span><a>{{ club.profile.website }}</a></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="about-block">
+                                        <div class="block-header">
+                                            <h4>Daha Fazla Bilgi</h4>
+                                        </div>
+                                        <div class="block-content">
+                                            <div class="flex-inner has-meta">
+                                                <i class="mdi mdi-office-building"></i>
+                                                <div class="meta">
+                                                    <span>Üye Sayısı</span>
+                                                    <span>2154</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="column is-6">
+                                    <div class="about-block">
+                                        <div class="block-header">
+                                            <h4>Tarihi</h4>
+                                        </div>
+                                        <div class="block-content">
+                                            <div class="history-block">
+                                                <div class="timeline">
+                                                    <span>{{ club.date_joined }}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block js %}
+    <script src="{% static "js/feed.js" %}"></script>
+    <script src="{% static "js/profile.js" %}"></script>
+{% endblock %}
